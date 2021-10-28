@@ -211,6 +211,18 @@ const BodyAccept = ({navigation, total, setTotal}) => {
             title={item.title}
           />
         ))}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingBottom: 20,
+            justifyContent: 'space-between',
+            marginLeft: 8,
+            marginRight: 10,
+          }}>
+          <Text>Mô tả chi tiết:</Text>
+          <Text>Bể bánh xe sau</Text>
+        </View>
       </View>
       {/* Hình ảnh sửa chữa */}
       <View style={styles.bodyItemContainer}>
@@ -246,10 +258,10 @@ const BodyAccept = ({navigation, total, setTotal}) => {
             size={23}
             color="orange"
           />
-          <Text style={styles.bodyItemTitle}>Tổng tiền sửa chữa</Text>
+          <Text style={styles.bodyItemTitle}>Tổng chi phí sửa chữa</Text>
         </View>
         <View style={styles.bodyItemPriceContainer}>
-          <Text style={styles.bodyItemPriceText}>Tổng tiền</Text>
+          <Text style={styles.bodyItemPriceText}>Tổng chi phí</Text>
           <Text style={styles.bodyItemPriceText}>
             {total === undefined ? 0 : total} Đ
           </Text>
@@ -266,9 +278,13 @@ const BodyAccept = ({navigation, total, setTotal}) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('MapComponent', {
-              total: total,
-            });
+            if (total === undefined || total === '') {
+              alert('Nhập chi phí sửa chữa');
+            } else {
+              navigation.navigate('MapComponent', {
+                total: total,
+              });
+            }
           }}
           style={styles.modalFooterButtonAccept}>
           <Text style={styles.modalFooterButtonText}>Chấp nhận</Text>

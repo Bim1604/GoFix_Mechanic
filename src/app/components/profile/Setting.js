@@ -28,7 +28,7 @@ const SettingComponent = ({navigation}) => {
           <FontAwesomeIcon icon={faArrowLeft} size={25} color="#fff" />
         </TouchableOpacity>
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Cài đặt nhận đơn</Text>
+          <Text style={styles.headerText}>Chuyển đổi dịch vụ</Text>
         </View>
       </LinearGradient>
       {/* Body */}

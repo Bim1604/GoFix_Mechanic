@@ -23,13 +23,14 @@ import {
   faUser,
   faWrench,
 } from '@fortawesome/free-solid-svg-icons';
+
 const apiKey = 'dJFdCdCFCXpUHfhlyWyv3h8uAmLaTRn15TEAVoF2';
 const accessToken =
   'pk.eyJ1IjoiYmltMTYwNCIsImEiOiJja3U3N2Rnbm40MDE3MnJxdGFpNW56bDJ3In0.MsFZyi3660Z_FdDm7ptx7A';
 const MapComponent = ({navigation, route}) => {
-  const [latUser, setLatUser] = useState(1);
-  const [lngUser, setLngUser] = useState(1);
-  const [address, setAddress] = useState(1);
+  const [latUser, setLatUser] = useState(10.8385133);
+  const [lngUser, setLngUser] = useState(106.8334517);
+  const [address, setAddress] = useState('');
   const [polyCoord, setPoLyCoord] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
   const latMechanic = latUser + 0.0045;
@@ -50,13 +51,6 @@ const MapComponent = ({navigation, route}) => {
         });
     });
   }, []);
-  useEffect(() => {
-    if (isLoaded === false) {
-      setTimeout(() => {
-        setIsLoaded(true);
-      }, 3000);
-    }
-  }, [isLoaded]);
   useEffect(() => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -80,6 +74,13 @@ const MapComponent = ({navigation, route}) => {
         });
     });
   }, [latMechanic, latUser, lngMechanic, lngUser]);
+  useEffect(() => {
+    if (isLoaded === false) {
+      setTimeout(() => {
+        setIsLoaded(true);
+      }, 3000);
+    }
+  }, [isLoaded]);
   return (
     <View>
       {isLoaded === true ? (
@@ -101,6 +102,9 @@ const MapComponent = ({navigation, route}) => {
               size={150}
               color="#fb6100"
             />
+            <Text style={styles.loadingText}>
+              Đang tìm tuyến đường tốt nhất
+            </Text>
           </View>
         </View>
       )}
@@ -167,7 +171,6 @@ const DirectComponent = ({
       </View>
     );
   };
-  console.log(polyCoord);
   return (
     <View style={styles.mapContainer}>
       <MapView
@@ -273,7 +276,7 @@ const DirectComponent = ({
             <View />
           )}
           <View style={styles.bottomBodyTextContainerShow}>
-            <Text style={styles.bottomBodyTotalTitle}>Tổng tiền:</Text>
+            <Text style={styles.bottomBodyTotalTitle}>Tổng chi phí:</Text>
             <Text style={styles.bottomBodyTotalText}>{total} Đ</Text>
           </View>
         </View>
@@ -293,18 +296,25 @@ const DirectComponent = ({
               <FontAwesomeIcon icon={faPhoneAlt} color="#fff" size={20} />
             </TouchableOpacity>
           </View>
-          {/* Hủy dịch vụ */}
-          {isShowInfo === true ? (
+          {/* button nav doub */}
+          <View style={styles.bottomFooterButtonStage}>
+            <TouchableOpacity
+              style={styles.bottomFooterButtonStartFix}
+              onPress={() => {
+                navigation.navigate('StageComponent', {
+                  total: total,
+                });
+              }}>
+              <Text style={styles.bottomFooterButtonText}>Đã đến chỗ</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.bottomFooterButtonCancel}
               onPress={() => {
-                navigation.navigate('HomeComponent');
+                navigation.navigate('DenyComponent');
               }}>
-              <Text style={styles.bottomFooterButtonText}>Hủy dịch vụ</Text>
+              <Text style={styles.bottomFooterButtonText}>Hủy đơn</Text>
             </TouchableOpacity>
-          ) : (
-            <View />
-          )}
+          </View>
         </View>
       </View>
     </View>
@@ -324,17 +334,21 @@ const styles = StyleSheet.create({
   loadingIcon: {
     height: 10,
   },
+  loadingText: {
+    marginTop: screen.height / 8,
+    fontSize: 20,
+  },
   map: {
     height: '25%',
     width: '100%',
   },
   mapDetailsShow: {
-    height: '67%',
+    height: '60%',
     width: '100%',
   },
   // bottom
   bottomContainer: {
-    height: '70%',
+    height: '79%',
     width: '100%',
     backgroundColor: '#fff',
     borderTopLeftRadius: 20,
@@ -361,7 +375,7 @@ const styles = StyleSheet.create({
   },
   bottomBodyContainerShow: {
     flexDirection: 'column',
-    height: '75%',
+    height: '68%',
   },
   //  Bottom Body User
   bottomBodyUserContainer: {
@@ -497,18 +511,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: 15,
   },
+  bottomFooterButtonStage: {
+    flexDirection: 'row',
+  },
+  // Bottom Footer Start Fix
+  bottomFooterButtonStartFix: {
+    borderWidth: 1,
+    backgroundColor: '#3399FF',
+    borderColor: '#3399FF',
+    width: screen.width / 2.2,
+    borderRadius: 10,
+    marginTop: 10,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 15,
+  },
   // Bottom Footer Cancel
   bottomFooterButtonCancel: {
     borderWidth: 1,
     backgroundColor: '#ff0000',
     borderColor: '#ff0000',
     borderRadius: 10,
-    width: '93%',
     height: 40,
+    width: screen.width / 2.2,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
-    marginLeft: 15,
+    marginLeft: 10,
     marginTop: 10,
   },
   bottomFooterButtonText: {

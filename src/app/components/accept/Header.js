@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {faArrowLeft, faCommentDots} from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';

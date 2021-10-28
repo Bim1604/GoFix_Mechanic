@@ -43,7 +43,7 @@ const ProfileComponent = ({navigation}) => {
             <FontAwesomeIcon icon={faCogs} size={40} color="orange" />
           </View>
           <View style={styles.bodyUserNavTextContainer}>
-            <Text style={styles.bodyUserNavText}>Cài đặt nhận đơn</Text>
+            <Text style={styles.bodyUserNavText}>Chuyển đổi dịch vụ</Text>
           </View>
           <View style={styles.bodyUserNavIconContainer}>
             <FontAwesomeIcon icon={faChevronRight} size={20} color="#808080" />

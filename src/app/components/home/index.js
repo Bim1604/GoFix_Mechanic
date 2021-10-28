@@ -12,7 +12,6 @@ import {View, StyleSheet, ScrollView, Text, Image} from 'react-native';
 import screen from '../../asset/constants/Measure';
 import AdvertisementComponent from './Advertisement';
 import HeaderComponent from './Header';
-import Services from './Service';
 import StatusWork from './StatusWork';
 import Modal from 'react-native-modal';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
@@ -20,19 +19,13 @@ import ava from '../../asset/image/mechanic.jpg';
 
 const HomeComponent = ({navigation, route}) => {
   const [isActive, setIsActive] = useState(false);
-  const [isFixMotor, setIsFixMotor] = useState(false);
-  const [isFixCar, setIsFixCar] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
   function ModalTester() {
     return (
       <View>
         <Modal
           onBackdropPress={() => {
-            toggleModal();
+            setModalVisible(false);
           }}
           isVisible={isModalVisible}>
           <View style={styles.modalContainer}>
@@ -79,7 +72,10 @@ const HomeComponent = ({navigation, route}) => {
                   <Text>Xe Honda tay ga SH 2021</Text>
                 </View>
               </View>
-              <Pressable onPress={toggleModal}>
+              <Pressable
+                onPress={() => {
+                  setModalVisible(false);
+                }}>
                 <FontAwesomeIcon icon={faTimes} color="#000" size={25} />
               </Pressable>
             </View>
@@ -87,6 +83,7 @@ const HomeComponent = ({navigation, route}) => {
             <View style={styles.modalFooterContainer}>
               <Pressable
                 onPress={() => {
+                  setModalVisible(false);
                   navigation.navigate('AcceptComponent');
                 }}
                 style={styles.modalFooterButtonAccept}>
