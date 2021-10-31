@@ -37,7 +37,10 @@ const CancelComponent = ({navigation}) => {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <HeaderComponent content="Lý do không hoàn thành sửa chữa" />
+      <HeaderComponent
+        navigation={navigation}
+        content="Lý do không hoàn thành sửa chữa"
+      />
       {/* Body */}
       <View style={styles.bodyContainer}>
         <View style={styles.bodyTitleContainer} />

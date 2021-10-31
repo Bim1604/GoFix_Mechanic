@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import HeaderComponent from '../stage/Header';
+import HeaderComponent from './Header';
 import screen from '../../asset/constants/Measure';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import LinearGradient from 'react-native-linear-gradient';
@@ -34,7 +34,7 @@ const DenyComponent = ({navigation}) => {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <HeaderComponent content="Hủy đơn" />
+      <HeaderComponent navigation={navigation} content="Hủy đơn" />
       {/* Body */}
       <View style={styles.bodyContainer}>
         <View style={styles.bodyTitleContainer}>

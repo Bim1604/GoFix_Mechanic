@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import {
   numberOfStage,
@@ -15,6 +15,19 @@ import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 const indexStage = 2;
 
 const CompleteComponent = ({navigation, route}) => {
+  const getCurrentDate = () => {
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+    return date + '-' + month + '-' + year;
+  };
+  const getCurrentTime = () => {
+    var hour = new Date().getHours();
+    var minutes = new Date().getMinutes();
+    var seconds = new Date().getSeconds();
+    return hour + ':' + minutes + ':' + seconds;
+  };
+
   return (
     <View style={styles.container}>
       {/* Header */}

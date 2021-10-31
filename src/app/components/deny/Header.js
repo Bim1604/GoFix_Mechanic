@@ -13,27 +13,14 @@ const HeaderComponent = ({navigation, content}) => {
       end={{x: 1.0, y: 1.0}}>
       <View>
         <View style={stylesHeader.headerContainer}>
-          {content === 'Tiến trình sửa chữa' ||
-          content === 'Hoàn thành sửa chữa' ? (
-            <View />
-          ) : (
-            <TouchableOpacity
-              style={stylesHeader.iconBack}
-              onPress={() => {
-                navigation.pop();
-              }}>
-              <FontAwesomeIcon icon={faChevronLeft} size={23} color="#fff" />
-            </TouchableOpacity>
-          )}
-          <Text
-            style={
-              content === 'Tiến trình sửa chữa' ||
-              content === 'Hoàn thành sửa chữa'
-                ? stylesHeader.headerText
-                : stylesHeader.headerTextComplete
-            }>
-            {content}
-          </Text>
+          <TouchableOpacity
+            style={stylesHeader.iconBack}
+            onPress={() => {
+              navigation.pop();
+            }}>
+            <FontAwesomeIcon icon={faChevronLeft} size={23} color="#fff" />
+          </TouchableOpacity>
+          <Text style={stylesHeader.headerText}>{content}</Text>
         </View>
       </View>
     </LinearGradient>
@@ -60,13 +47,6 @@ const stylesHeader = StyleSheet.create({
     fontWeight: '700',
     color: '#fff',
     marginLeft: screen.width / 3.5,
-  },
-  headerTextComplete: {
-    textAlignVertical: 'center',
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#fff',
-    marginLeft: screen.width / 12,
   },
 });
 

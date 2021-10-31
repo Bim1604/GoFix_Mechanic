@@ -11,6 +11,8 @@ import StartFixComponent from '../components/stage';
 import CompleteComponent from '../components/stage/Complete';
 import CancelComponent from '../components/stage/Cancel';
 import DenyComponent from '../components/deny';
+import HistoryComponent from '../components/history';
+import DetailsItem from '../components/detailsHistory/index';
 
 const Stack = createStackNavigator();
 
@@ -62,4 +64,13 @@ const ProfileScreen = () => {
   );
 };
 
-export {HomeScreen, ProfileScreen};
+const HistoryScreen = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="HistoryComponent" component={HistoryComponent} />
+      <Stack.Screen name="HistoryDetailsComponent" component={DetailsItem} />
+    </Stack.Navigator>
+  );
+};
+
+export {HomeScreen, ProfileScreen, HistoryScreen};

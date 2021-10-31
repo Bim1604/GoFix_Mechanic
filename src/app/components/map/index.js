@@ -299,20 +299,20 @@ const DirectComponent = ({
           {/* button nav doub */}
           <View style={styles.bottomFooterButtonStage}>
             <TouchableOpacity
+              style={styles.bottomFooterButtonCancel}
+              onPress={() => {
+                navigation.navigate('DenyComponent');
+              }}>
+              <Text style={styles.bottomFooterButtonText}>Hủy đơn</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
               style={styles.bottomFooterButtonStartFix}
               onPress={() => {
                 navigation.navigate('StageComponent', {
                   total: total,
                 });
               }}>
-              <Text style={styles.bottomFooterButtonText}>Đã đến chỗ</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.bottomFooterButtonCancel}
-              onPress={() => {
-                navigation.navigate('DenyComponent');
-              }}>
-              <Text style={styles.bottomFooterButtonText}>Hủy đơn</Text>
+              <Text style={styles.bottomFooterButtonText}>Đã đến nơi</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -525,7 +525,6 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 15,
   },
   // Bottom Footer Cancel
   bottomFooterButtonCancel: {
@@ -537,8 +536,8 @@ const styles = StyleSheet.create({
     width: screen.width / 2.2,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10,
-    marginLeft: 10,
+    marginRight: 8,
+    marginLeft: 15,
     marginTop: 10,
   },
   bottomFooterButtonText: {
