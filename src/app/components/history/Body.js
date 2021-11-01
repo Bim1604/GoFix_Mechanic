@@ -23,6 +23,7 @@ import {
   faWrench,
 } from '@fortawesome/free-solid-svg-icons';
 import screen from '../../asset/constants/Measure';
+
 export const ItemListDetails = ({text, icon}) => {
   return (
     <View style={styles.itemContentContainer}>

@@ -49,6 +49,12 @@ const ProfileComponent = ({navigation}) => {
             <FontAwesomeIcon icon={faChevronRight} size={20} color="#808080" />
           </View>
         </TouchableOpacity>
+        {/* Đăng xuất */}
+        <TouchableOpacity style={styles.bodyUserNavContainer}>
+          <View style={styles.bodyUserNavTextContainer}>
+            <Text style={styles.bodyLogoutText}>Đăng xuất</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -106,6 +112,12 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  // Logout
+  bodyLogoutText: {
+    alignSelf: 'center',
+    fontSize: 17,
+    fontWeight: 'bold',
   },
 });
 

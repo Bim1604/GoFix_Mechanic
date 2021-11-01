@@ -23,7 +23,9 @@ import {
   faUser,
   faWrench,
 } from '@fortawesome/free-solid-svg-icons';
+import call from 'react-native-phone-call';
 
+const phone = '0971547522';
 const apiKey = 'dJFdCdCFCXpUHfhlyWyv3h8uAmLaTRn15TEAVoF2';
 const accessToken =
   'pk.eyJ1IjoiYmltMTYwNCIsImEiOiJja3U3N2Rnbm40MDE3MnJxdGFpNW56bDJ3In0.MsFZyi3660Z_FdDm7ptx7A';
@@ -140,6 +142,9 @@ const DirectComponent = ({
   const [latAverage, setLatAverage] = useState(1);
   const [lngAverage, setLngAverage] = useState(1);
   const [isShowInfo, setIsShowInfo] = useState(false);
+  const args = {
+    number: phone,
+  };
   const LONGITUDE_DELTA =
     lngUser < lngMechanic
       ? (lngMechanic - lngUser) / (lngUser / lngMechanic / 2)
@@ -238,7 +243,7 @@ const DirectComponent = ({
             <View style={styles.bottomBodyTextContainer}>
               <View style={styles.bottomBodyTitleContainer}>
                 <Text style={styles.bottomBodyTextName}>Trần Đại Đăng</Text>
-                <Text style={styles.bottomBodyText}>0971547522</Text>
+                <Text style={styles.bottomBodyText}>{phone}</Text>
                 <Text style={styles.bottomBodyText}>
                   123 Lê Văn Việt, quận 9, thành phố Hồ Chí Minh
                 </Text>
@@ -291,7 +296,7 @@ const DirectComponent = ({
             <TouchableOpacity
               style={styles.bottomFooterButtonCall}
               onPress={() => {
-                navigation.navigate('HomeComponent');
+                call(args).catch(console.error);
               }}>
               <FontAwesomeIcon icon={faPhoneAlt} color="#fff" size={20} />
             </TouchableOpacity>
