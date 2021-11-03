@@ -5,12 +5,11 @@ import screen from '../../asset/constants/Measure';
 const stylesStatusWork = StyleSheet.create({
   statusContainer: {
     bottom: screen.height / 10,
-    alignItems: 'center',
   },
   titleContainer: {
     flexDirection: 'row',
     width: screen.width / 1.1,
-    paddingLeft: screen.width / 40,
+    marginLeft: screen.width / 20,
     borderWidth: 1,
     borderRadius: 10,
     backgroundColor: '#fff',
@@ -35,8 +34,9 @@ const stylesStatusWork = StyleSheet.create({
   bodyTextTitleStatus: {
     fontSize: 17,
     color: '#000',
-    // fontWeight: '700',
-    margin: 21,
+    margin: 13,
+    marginTop: 21,
+    marginBottom: 21,
     marginRight: -10,
   },
   bodyTextTitle: {
@@ -65,7 +65,7 @@ const stylesStatusWork = StyleSheet.create({
   //  InActive
   bodyInActiveButton: {
     width: screen.width / 2.02,
-    height: screen.height / 20,
+    height: screen.height / 18,
     backgroundColor: '#fff',
     borderWidth: 1,
     borderRadius: 50,

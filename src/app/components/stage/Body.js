@@ -194,8 +194,8 @@ const styles = StyleSheet.create({
   bodyTitleContainer: {
     marginLeft: 15,
     flexDirection: 'column',
-    width: '90%',
-    height: 60,
+    width: '80%',
+    height: screen.height / 9,
   },
   bodyText: {
     fontSize: 14,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   bodyItemContainer: {
-    height: '46%',
+    height: screen.height / 2,
   },
   bodyItemTitleContainer: {
     flexDirection: 'row',
@@ -230,16 +230,17 @@ const styles = StyleSheet.create({
   },
   bodyFixTextContainer: {
     flexDirection: 'row',
-    marginLeft: 15,
-    width: 380,
+    width: screen.width,
     justifyContent: 'space-between',
     marginBottom: 10,
   },
   bodyFixTextTitle: {
     fontSize: 15,
+    marginLeft: 15,
   },
   bodyFixTextCost: {
     fontSize: 15,
+    marginRight: 15,
   },
   //  Total
   bodyTextContainerShow: {
@@ -267,7 +268,6 @@ const styles = StyleSheet.create({
   bodyCompleteContainer: {
     flexDirection: 'column',
     alignSelf: 'center',
-    marginTop: screen.height / 10,
   },
   bodyCompleteButton: {
     width: screen.width / 1.1,

@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import logo from '../../asset/image/Logo.png';
 import screen from '../../asset/constants/Measure';
@@ -23,7 +24,8 @@ const LoginComponent = ({navigation, setFullName, setInitPhone}) => {
         for (let index = 0; index < json.length; index++) {
           if (
             phone === json[index].phone &&
-            password === json[index].password && json[index].role === 'mec'
+            password === json[index].password &&
+            json[index].role === 'mec'
           ) {
             setInitPhone(json[index].phone);
             setFullName(json[index].fullName);
@@ -36,46 +38,49 @@ const LoginComponent = ({navigation, setFullName, setInitPhone}) => {
     }
   };
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.headerContainer}>
-        <View style={styles.headerLogoContainer}>
-          <Image source={logo} style={styles.headerLogoImage} />
+    <ScrollView>
+      <View style={styles.container}>
+        {/* Header */}
+        <View style={styles.headerContainer}>
+          <View style={styles.headerLogoContainer}>
+            <Image source={logo} style={styles.headerLogoImage} />
+          </View>
+          <Text style={styles.headerLogoTitle}>GoFix - Mechanic</Text>
+          <Text style={styles.headerLogoText}>
+            Sửa xe nhanh chóng và tiện lợi
+          </Text>
         </View>
-        <Text style={styles.headerLogoTitle}>GoFix - Mechanic</Text>
-        <Text style={styles.headerLogoText}>
-          Sửa xe nhanh chóng và tiện lợi
-        </Text>
-      </View>
-      {/* Body */}
-      <View style={styles.bodyContainer}>
-        <View style={styles.bodyContentContainer}>
-          <Text style={styles.bodyRegisTitle}>Số điện thoại</Text>
-          <TextInput
-            onChangeText={setPhone}
-            value={phone}
-            onChange={text => setPhone(text)}
-            style={styles.bodyRegisTextInput}
-            placeholder="Nhập số điện thoại"
-          />
-          <Text style={styles.bodyRegisTitle}>Mật khẩu</Text>
-          <TextInput
-            onChangeText={setPassword}
-            value={password}
-            onChange={text => setPassword(text)}
-            style={styles.bodyRegisTextInput}
-            placeholder="Nhập mật khẩu"
-          />
+        {/* Body */}
+        <View style={styles.bodyContainer}>
+          <View style={styles.bodyContentContainer}>
+            <Text style={styles.bodyRegisTitle}>Số điện thoại</Text>
+            <TextInput
+              onChangeText={setPhone}
+              value={phone}
+              onChange={text => setPhone(text)}
+              style={styles.bodyRegisTextInput}
+              placeholder="Nhập số điện thoại"
+            />
+            <Text style={styles.bodyRegisTitle}>Mật khẩu</Text>
+            <TextInput
+              onChangeText={setPassword}
+              secureTextEntry={true}
+              value={password}
+              onChange={text => setPassword(text)}
+              style={styles.bodyRegisTextInput}
+              placeholder="Nhập mật khẩu"
+            />
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              checkLogin();
+            }}
+            style={styles.bodyRegisButton}>
+            <Text style={styles.bodyRegisButtonText}>Đăng Nhập</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            checkLogin();
-          }}
-          style={styles.bodyRegisButton}>
-          <Text style={styles.bodyRegisButtonText}>Đăng Nhập</Text>
-        </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -132,7 +137,7 @@ const styles = StyleSheet.create({
     marginHorizontal: screen.width / 10,
     borderRadius: 10,
     paddingLeft: 15,
-    height: screen.height / 20,
+    height: screen.height / 17,
   },
   //   Button
   bodyRegisButton: {

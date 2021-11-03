@@ -38,21 +38,21 @@ const MapComponent = ({navigation, route}) => {
   const latMechanic = latUser + 0.0045;
   const lngMechanic = lngUser + 0.0045;
   useEffect(() => {
-    GetLocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 15000,
-    }).then(location => {
-      setLatUser(location.latitude);
-      setLngUser(location.longitude);
-      fetch(
-        `https://rsapi.goong.io/Geocode?latlng=${location.latitude},${location.longitude}&api_key=${apiKey}`,
-      )
-        .then(res => res.json())
-        .then(local => {
-          setAddress(local.results[0].formatted_address);
-        });
-    });
-  }, []);
+    // GetLocation.getCurrentPosition({
+    //   enableHighAccuracy: true,
+    //   timeout: 15000,
+    // }).then(location => {
+    // setLatUser(location.latitude);
+    // setLngUser(location.longitude);
+    fetch(
+      `https://rsapi.goong.io/Geocode?latlng=${latUser},${lngUser}&api_key=${apiKey}`,
+    )
+      .then(res => res.json())
+      .then(local => {
+        setAddress(local.results[0].formatted_address);
+      });
+    // });
+  }, [latUser, lngUser]);
   useEffect(() => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   mapDetailsShow: {
-    height: '60%',
+    height: '52%',
     width: '100%',
   },
   // bottom
@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
   },
   bottomBodyContainerShow: {
     flexDirection: 'column',
-    height: '68%',
+    height: screen.height / 2,
   },
   //  Bottom Body User
   bottomBodyUserContainer: {
@@ -411,8 +411,9 @@ const styles = StyleSheet.create({
   bottomBodyTitleContainer: {
     marginLeft: 15,
     flexDirection: 'column',
-    width: '90%',
+    width: '85%',
     height: 60,
+    marginBottom: 10,
   },
   bottomBodyText: {
     fontSize: 14,
@@ -461,15 +462,16 @@ const styles = StyleSheet.create({
   },
   bottomBodyFixTextContainer: {
     flexDirection: 'row',
-    marginLeft: 15,
-    width: 380,
+    width: screen.width,
     justifyContent: 'space-between',
   },
   bottomBodyFixTextTitle: {
     fontSize: 15,
+    marginLeft: 15,
   },
   bottomBodyFixTextCost: {
     fontSize: 15,
+    marginRight: 15,
   },
   //  Footer
   //  bottom Footer
@@ -481,7 +483,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: 395,
+    width: screen.width,
     marginBottom: 10,
   },
   bottomBodyTotalTitle: {
@@ -491,6 +493,7 @@ const styles = StyleSheet.create({
   },
   bottomBodyTotalText: {
     fontSize: 15,
+    marginRight: 15,
   },
   // Bottom footer call
   bottomFooterButtonContainer: {

@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   // modal
   modalContainer: {
-    minHeight: screen.height / 3.5,
+    minHeight: screen.height / 2.6,
     borderWidth: 1,
     borderRadius: 10,
     backgroundColor: '#fff',

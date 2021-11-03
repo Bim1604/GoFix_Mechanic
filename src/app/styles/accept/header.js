@@ -10,10 +10,11 @@ const stylesHeader = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     height: screen.height / 12,
+    alignItems: 'center',
   },
   headerIconBack: {
     color: '#fff',
-    margin: 20,
+    marginLeft: screen.width / 20,
   },
   headerText: {
     textAlignVertical: 'center',

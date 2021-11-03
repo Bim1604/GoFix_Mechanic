@@ -4,8 +4,8 @@ import screen from '../../asset/constants/Measure';
 const stylesSwiper = StyleSheet.create({
   //Header swiper
   headerWrap: {
-    height: 200,
-    width: 370,
+    height: screen.height / 4,
+    width: screen.width / 1.13,
     marginLeft: 21,
     bottom: screen.height / 5.8,
   },

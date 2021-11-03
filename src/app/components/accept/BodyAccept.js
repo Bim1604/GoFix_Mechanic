@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: -6,
+    marginLeft: 10,
   },
   headerIconVehicle: {
     marginRight: 5,
@@ -454,7 +454,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: 1,
     margin: 20,
-    height: screen.height / 22,
+    height: screen.height / 18,
     borderRadius: 6,
     borderColor: '#AAAAAA',
   },

@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   // Go back
   bodyGoBackContainer: {
-    marginTop: screen.height / 5,
+    marginTop: screen.height / 7,
     marginHorizontal: screen.width / 20,
     height: screen.height / 15,
     borderRadius: 8,

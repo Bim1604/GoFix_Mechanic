@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { faHistory, faHome, faList, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHistory, faHome, faUser } from '@fortawesome/free-solid-svg-icons';
 import {HomeScreen, ProfileScreen, HistoryScreen} from '../../container/index';
 const data = [
   {
@@ -7,12 +7,6 @@ const data = [
     component: HomeScreen,
     fontSize: 12,
     icon: faHome,
-  },
-  {
-    name: 'Đơn hàng',
-    component: HomeScreen,
-    fontSize: 12,
-    icon: faList,
   },
   {
     name: 'Lịch sử',
