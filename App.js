@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Route from './src/app/router/index';
