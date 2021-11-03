@@ -1,17 +1,36 @@
 /* eslint-disable prettier/prettier */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import data from '../asset/constants/NavData';
 import {Text, View} from 'react-native';
 import screen from '../asset/constants/Measure';
+import LoginScreen from '../components/auth/Login';
+
+import {YellowBox} from 'react-native';
+
+YellowBox.ignoreWarnings([
+  'Non-serializable values were found in the navigation state',
+]);
+
 const Tab = createBottomTabNavigator();
 
-const Route = () => {
-  return (
-    <NavigationContainer>
+
+const Route = ({navigation}) => {
+  const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
+  if (fullName === '') {
+    return (
+      <LoginScreen
+        setFullName={setFullName}
+        setInitPhone={setPhone}
+        navigation={navigation}
+      />
+    );
+  } else {
+    return (
       <Tab.Navigator
         screenOptions={{
           tabBarActiveTintColor: '#fe8c00',
@@ -24,6 +43,11 @@ const Route = () => {
         }}>
         {data.map((item, index) => (
           <Tab.Screen
+            initialParams={{
+              fullName: fullName,
+              phone: phone,
+              setFullName: setFullName,
+            }}
             name={item.name}
             component={item.component}
             options={{
@@ -51,8 +75,8 @@ const Route = () => {
           />
         ))}
       </Tab.Navigator>
-    </NavigationContainer>
-  );
+    );
+  }
 };
 
 export default Route;

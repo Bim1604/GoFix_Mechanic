@@ -1,12 +1,38 @@
 /* eslint-disable prettier/prettier */
-import {faChevronRight, faCog, faCogs} from '@fortawesome/free-solid-svg-icons';
+import {faChevronRight, faCogs} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import screen from '../../asset/constants/Measure';
-import ava from '../../asset/image/mechanic.jpg';
-const ProfileComponent = ({navigation}) => {
+
+const apiUser = 'https://history-search-map.herokuapp.com/api/user';
+
+const ProfileComponent = ({navigation, route}) => {
+  const [phone, setPhone] = useState(route.params.phone);
+  const [data, setData] = useState({
+    fullName: '',
+    avatar:
+      'https://static2.yan.vn/YanNews/2167221/202003/dan-mang-du-trend-thiet-ke-avatar-du-kieu-day-mau-sac-tu-anh-mac-dinh-f4781c7a.jpg',
+    gender: '',
+    DOB: '',
+    phone: '',
+    password: '',
+  });
+  useEffect(() => {
+    fetch(apiUser)
+      .then(res => res.json())
+      .then(json => {
+        for (let index = 0; index < json.length; index++) {
+          if (
+            phone === json[index].phone &&
+            json[index].role === 'mec'
+          ) {
+            setData(json[index]);
+          }
+        }
+      });
+  }, [phone]);
   return (
     <View>
       {/* Header */}
@@ -22,12 +48,21 @@ const ProfileComponent = ({navigation}) => {
       {/* Body */}
       <View>
         {/* ava */}
-        <TouchableOpacity style={styles.bodyUserNavContainer}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('DetailsInfoComponent', {
+              phone: phone,
+            });
+          }}
+          style={styles.bodyUserNavContainer}>
           <View style={styles.bodyUserNavImageContainer}>
-            <Image source={ava} style={styles.bodyUserNavImage} />
+            <Image
+              source={{uri: data.avatar}}
+              style={styles.bodyUserNavImage}
+            />
           </View>
           <View style={styles.bodyUserNavTextContainer}>
-            <Text style={styles.bodyUserNavText}>Trần Đại Minh</Text>
+            <Text style={styles.bodyUserNavText}>{data.fullName}</Text>
           </View>
           <View style={styles.bodyUserNavIconContainer}>
             <FontAwesomeIcon icon={faChevronRight} size={20} color="#808080" />
@@ -50,7 +85,11 @@ const ProfileComponent = ({navigation}) => {
           </View>
         </TouchableOpacity>
         {/* Đăng xuất */}
-        <TouchableOpacity style={styles.bodyUserNavContainer}>
+        <TouchableOpacity
+          onPress={() => {
+            route.params.setFullName('');
+          }}
+          style={styles.bodyUserNavContainer}>
           <View style={styles.bodyUserNavTextContainer}>
             <Text style={styles.bodyLogoutText}>Đăng xuất</Text>
           </View>

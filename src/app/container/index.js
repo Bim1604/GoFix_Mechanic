@@ -13,6 +13,7 @@ import CancelComponent from '../components/stage/Cancel';
 import DenyComponent from '../components/deny';
 import HistoryComponent from '../components/history';
 import DetailsItem from '../components/detailsHistory/index';
+import InfoDetailsComponent from '../components/profile/InfoDetails';
 
 const Stack = createStackNavigator();
 
@@ -55,11 +56,20 @@ const HomeScreen = ({navigation, route}) => {
   );
 };
 
-const ProfileScreen = () => {
+const ProfileScreen = ({route}) => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="ProfileComponent" component={ProfileComponent} />
+      <Stack.Screen
+        initialParams={{
+          fullName: route.params.fullName,
+          phone: route.params.phone,
+          setFullName: route.params.setFullName,
+        }}
+        name="ProfileComponent"
+        component={ProfileComponent}
+      />
       <Stack.Screen name="SettingComponent" component={SettingComponent} />
+      <Stack.Screen name="DetailsInfoComponent" component={InfoDetailsComponent} />
     </Stack.Navigator>
   );
 };

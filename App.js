@@ -1,10 +1,10 @@
 import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import Route from './src/app/router/index';
+import LoginScreen from './src/app/container/Login';
 export default function App() {
   return (
     <SafeAreaProvider>
-      <Route />
+      <LoginScreen />
     </SafeAreaProvider>
   );
 }
