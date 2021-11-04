@@ -199,7 +199,7 @@ const BodyDetails = ({
             marginRight: 10,
           }}>
           <Text>Mô tả chi tiết:</Text>
-          {description === '' || description === undefined ? (
+          {description === '' || description === undefined? (
             <Text>Không có mô tả</Text>
           ) : (
             <Text>{description}</Text>
