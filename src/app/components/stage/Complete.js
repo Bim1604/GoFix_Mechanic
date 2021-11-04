@@ -50,6 +50,7 @@ const CompleteComponent = ({navigation, route}) => {
         address: route.params.address,
         detailsFix: route.params.detailsFix,
         time: time,
+        description: route.params.description === undefined ? '' : route.params.description,
         image: route.params.image,
         cusID: route.params.userID,
         mecID: route.params.mecID,

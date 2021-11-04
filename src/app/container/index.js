@@ -84,10 +84,16 @@ const ProfileScreen = ({route}) => {
   );
 };
 
-const HistoryScreen = () => {
+const HistoryScreen = ({route}) => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="HistoryComponent" component={HistoryComponent} />
+      <Stack.Screen
+        initialParams={{
+          id: route.params.id,
+        }}
+        name="HistoryComponent"
+        component={HistoryComponent}
+      />
       <Stack.Screen name="HistoryDetailsComponent" component={DetailsItem} />
     </Stack.Navigator>
   );

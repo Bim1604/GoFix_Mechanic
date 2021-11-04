@@ -71,6 +71,7 @@ const CancelComponent = ({navigation, route}) => {
         phone: route.params.phone,
         address: route.params.address,
         detailsFix: route.params.detailsFix,
+        description: route.params.description === undefined ? '' : route.params.description,
         time: time,
         image: route.params.image,
         cusID: route.params.userID,

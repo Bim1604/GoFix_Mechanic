@@ -88,7 +88,7 @@ const ItemFixer = ({title, total, setTotal}) => {
 const BodyAccept = ({navigation, total, setTotal, route}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [indexModalSwiper, setIndexModalSwiper] = useState(0);
-
+  const [detailsFix, setDetailsFix] = useState(route.params.detailsFix);
   function ModalTester() {
     return (
       <View>
@@ -189,7 +189,7 @@ const BodyAccept = ({navigation, total, setTotal, route}) => {
           />
           <Text style={styles.bodyItemTitle}>Chi tiết sửa chữa</Text>
         </View>
-        {route.params.detailsFix.map((item, index) => (
+        {detailsFix.map((item, index) => (
           <ItemFixer
             setTotal={setTotal}
             total={total}

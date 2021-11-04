@@ -8,7 +8,6 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import avatar from '../../asset/image/mechanic.jpg';
 import screen from '../../asset/constants/Measure';
 import StepIndicator from 'react-native-step-indicator';
 import {
@@ -127,6 +126,7 @@ const BodyComponent = ({navigation, total, route}) => {
           style={styles.bodyCompleteButton}>
           <Text style={styles.bodyCompleteText}>Hoàn Thành sửa chữa</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('CancelComponent', {
