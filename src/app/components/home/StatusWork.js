@@ -35,9 +35,9 @@ const StatusWork = ({isActive, setIsActive, setModalVisible}) => {
             }
             onPress={() => {
               setIsActive(prevState => !prevState);
-              if (!isActive) {
-                setTimeout(() => setModalVisible(true), 2000);
-              }
+              // if (!isActive) {
+              //   setTimeout(() => setModalVisible(true), 2000);
+              // }
             }}>
             <FontAwesomeIcon
               style={

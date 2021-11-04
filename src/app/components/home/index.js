@@ -16,7 +16,7 @@ import HeaderComponent from './Header';
 import StatusWork from './StatusWork';
 import Modal from 'react-native-modal';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
-
+import messaging from '@react-native-firebase/messaging';
 const apiCustomerRequest =
   'https://history-search-map.herokuapp.com/api/customerRequest/1';
 
@@ -45,6 +45,12 @@ const HomeComponent = ({navigation, route}) => {
         setData(json);
       });
   }, []);
+
+  messaging().onMessage(async remoteMessage => {
+    if (isActive === true) {
+      setModalVisible(true);
+    }
+  });
 
   function ModalTester() {
     return (
@@ -144,7 +150,7 @@ const HomeComponent = ({navigation, route}) => {
         <HeaderComponent />
         <AdvertisementComponent />
         <StatusWork
-          setModalVisible={setModalVisible}
+          // setModalVisible={setModalVisible}
           isActive={isActive}
           setIsActive={setIsActive}
         />

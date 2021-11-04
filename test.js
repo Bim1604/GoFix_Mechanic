@@ -1,7 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
 import {View, Text, Image} from 'react-native';
-import messaging from '@react-native-firebase/messaging';
+import messaging, {
+  firebase,
+  FirebaseMessagingTypes,
+} from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import {Button} from 'react-native';
 
@@ -13,6 +16,9 @@ const Test = () => {
   });
   const getToken = async () => {
     const token = await messaging().getToken();
+    messaging().onMessageSent(messageId => {
+      console.log('Message has been sent to the FCM server', messageId);
+    });
     console.log('.............: ', token);
   };
 
