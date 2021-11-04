@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -25,12 +25,70 @@ const dataReason = [
     text: 'Lý do khác',
   },
 ];
-const DenyComponent = ({navigation}) => {
+
+const apiHistory =
+  'https://history-search-map.herokuapp.com/api/historyCustomer';
+
+const DenyComponent = ({navigation, route}) => {
   const [checkAnotherProblem, setCheckAnotherProblem] = useState(false);
   const [checkLackOfParts, setCheckLackOfParts] = useState(false);
   const [checkChangeMind, setCheckChangeMind] = useState(false);
   const [checkHardFix, setCheckHardFix] = useState(false);
   const [anotherProblem, setAnotherProblem] = useState('');
+  const [cancelReason, setCancelReason] = useState('');
+  const [time, setTime] = useState('');
+
+  const getCurrentDate = () => {
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+    return date + '-' + month + '-' + year;
+  };
+  const getCurrentTime = () => {
+    var hour = new Date().getHours();
+    var minutes = new Date().getMinutes();
+    var seconds = new Date().getSeconds();
+    return hour + ':' + minutes + ':' + seconds;
+  };
+  // Thoi gian hien tai
+  useEffect(() => {
+    var date = getCurrentDate();
+    var timeCurrent = getCurrentTime();
+    setTime(timeCurrent + ' ' + date);
+  }, []);
+
+  const AddReason = () => {
+    fetch(apiHistory, {
+      method: 'POST',
+      body: JSON.stringify({
+        name: route.params.fullName,
+        avatar: route.params.avatar,
+        phone: route.params.phone,
+        address: route.params.address,
+        detailsFix: route.params.detailsFix,
+        time: time,
+        image: route.params.image,
+        cusID: route.params.userID,
+        mecID: route.params.mecID,
+        price: route.params.total,
+        status: route.params.status,
+        motor: route.params.cate !== 'Xe máy' ? '' : route.params.vehicleName,
+        car: route.params.cate === 'Xe máy' ? '' : route.params.vehicleName,
+        reasonMechanicCancel: cancelReason,
+      }),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  };
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -53,15 +111,19 @@ const DenyComponent = ({navigation}) => {
                 onPress={() => {
                   if (index === 0) {
                     setCheckLackOfParts(prevState => !prevState);
+                    setCancelReason(dataReason[0].text);
                   }
                   if (index === 1) {
                     setCheckChangeMind(prevState => !prevState);
+                    setCancelReason(dataReason[1].text);
                   }
                   if (index === 2) {
                     setCheckHardFix(prevState => !prevState);
+                    setCancelReason(dataReason[2].text);
                   }
                   if (index === 3) {
                     setCheckAnotherProblem(prev => !prev);
+                    setCancelReason(anotherProblem);
                   }
                 }}
               />
@@ -92,6 +154,7 @@ const DenyComponent = ({navigation}) => {
         end={{x: 1.0, y: 1.0}}>
         <TouchableOpacity
           onPress={() => {
+            AddReason();
             navigation.popToTop();
           }}
           style={styles.footerButtonSend}>

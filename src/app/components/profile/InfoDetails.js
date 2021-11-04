@@ -27,14 +27,14 @@ const InfoDetailsComponent = ({navigation, route}) => {
       .then(json => {
         for (let index = 0; index < json.length; index++) {
           if (
-            route.params.phone === json[index].phone &&
+            route.params.id === json[index].id &&
             json[index].role === 'mec'
           ) {
             setData(json[index]);
           }
         }
       });
-  }, [route.params.phone]);
+  }, [route.params.id]);
   return (
     <View>
       {/* Header */}

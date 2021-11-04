@@ -17,15 +17,17 @@ YellowBox.ignoreWarnings([
 
 const Tab = createBottomTabNavigator();
 
-
 const Route = ({navigation}) => {
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
+  const [id, setID] = useState('');
+
   if (fullName === '') {
     return (
       <LoginScreen
         setFullName={setFullName}
         setInitPhone={setPhone}
+        setID={setID}
         navigation={navigation}
       />
     );
@@ -46,6 +48,7 @@ const Route = ({navigation}) => {
             initialParams={{
               fullName: fullName,
               phone: phone,
+              id: id,
               setFullName: setFullName,
             }}
             name={item.name}

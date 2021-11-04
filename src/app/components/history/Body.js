@@ -183,62 +183,6 @@ const data = [
       },
     ],
   },
-  {
-    name: 'Nguyễn Hoàng Vi',
-    avatar: ava_cus3,
-    phone: '0364909656',
-    address: '352 Lê Văn Việt, Quận 9, Thành phố Hồ Chí Minh',
-    detailsFix: [
-      {
-        fix: 'Bể bánh xe',
-        unitPrice: 80000,
-      },
-    ],
-    time: '18:19:58 30-10-2021',
-    price: 80000,
-    status: true,
-    motor: '',
-    car: 'Toyota Fortuner 2021',
-    description: '',
-    image: [
-      {
-        link:
-          'https://img1.oto.com.vn/crop/230x172/2021/10/26/20211026145928-0d7f_wm.jpg',
-      },
-      {
-        link:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQwBBj-Oj09iO9U1rkzwv3Fe9C3z3NxzRT8A&usqp=CAU',
-      },
-    ],
-  },
-  {
-    name: 'Huỳnh Thanh Nhi',
-    avatar: ava_cus4,
-    phone: '0364909656',
-    address: '353 Lê Văn Việt, Quận 9, Thành phố Hồ Chí Minh',
-    detailsFix: [
-      {
-        fix: 'Bể bánh xe',
-        unitPrice: 80000,
-      },
-    ],
-    time: '20:35:58 30-10-2021',
-    price: 80000,
-    status: false,
-    motor: 'Xe yamaha glorious 2021',
-    car: '',
-    description: '',
-    image: [
-      {
-        link:
-          'https://autopro8.mediacdn.vn/2017/yamaha-concept-6-1494051798378.jpg',
-      },
-      {
-        link:
-          'https://muaxecu.vn/wp-content/uploads/2017/12/yamaha-glorious-8.jpg',
-      },
-    ],
-  },
 ];
 const BodyComponent = ({navigation}) => {
   const renderItem = ({item, index}) => {

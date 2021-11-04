@@ -48,7 +48,7 @@ const stylesHeader = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     height: screen.height / 12,
-    // justifyContent: 'center',
+    justifyContent: 'center',
   },
   iconBack: {
     alignSelf: 'center',
@@ -59,14 +59,14 @@ const stylesHeader = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     color: '#fff',
-    marginLeft: screen.width / 3.5,
+    // marginLeft: screen.width / 3.5,
   },
   headerTextComplete: {
     textAlignVertical: 'center',
     fontSize: 20,
     fontWeight: '700',
     color: '#fff',
-    marginLeft: screen.width / 12,
+    marginLeft: screen.width / 35,
   },
 });
 

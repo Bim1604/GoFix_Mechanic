@@ -143,7 +143,7 @@ const BodyDetails = ({
     },
   ];
   return (
-    <View>
+    <ScrollView>
       <ModalTester />
       {/* User */}
       <View style={styles.userContainer}>
@@ -245,7 +245,7 @@ const BodyDetails = ({
           </Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -286,7 +286,6 @@ const styles = StyleSheet.create({
   },
   headerDetailsContainer: {
     width: '72%',
-    marginRight: screen.width / 8,
     marginTop: 5,
   },
   headerTitle: {
@@ -474,7 +473,8 @@ const styles = StyleSheet.create({
   // Image
   // image item container
   itemImageContainer: {
-    padding: screen.width / 60,
+    paddingBottom: screen.width / 60,
+    marginRight: screen.width / 50,
     justifyContent: 'center',
     alignItems: 'center',
     width: '27%',

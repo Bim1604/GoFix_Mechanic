@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import {
@@ -14,7 +14,12 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 const indexStage = 2;
 
+const apiHistory =
+  'https://history-search-map.herokuapp.com/api/historyCustomer';
+
+
 const CompleteComponent = ({navigation, route}) => {
+  const [time, setTime] = useState('');
   const getCurrentDate = () => {
     var date = new Date().getDate();
     var month = new Date().getMonth() + 1;
@@ -26,6 +31,45 @@ const CompleteComponent = ({navigation, route}) => {
     var minutes = new Date().getMinutes();
     var seconds = new Date().getSeconds();
     return hour + ':' + minutes + ':' + seconds;
+  };
+
+  // Thoi gian hien tai
+  useEffect(() => {
+    var date = getCurrentDate();
+    var timeCurrent = getCurrentTime();
+    setTime(timeCurrent + ' ' + date);
+  }, []);
+
+  const AddComplete = () => {
+    fetch(apiHistory, {
+      method: 'POST',
+      body: JSON.stringify({
+        name: route.params.fullName,
+        avatar: route.params.avatar,
+        phone: route.params.phone,
+        address: route.params.address,
+        detailsFix: route.params.detailsFix,
+        time: time,
+        image: route.params.image,
+        cusID: route.params.userID,
+        mecID: route.params.mecID,
+        price: route.params.total,
+        status: route.params.status,
+        motor: route.params.cate !== 'Xe máy' ? '' : route.params.vehicleName,
+        car: route.params.cate === 'Xe máy' ? '' : route.params.vehicleName,
+        reasonMechanicCancel: '',
+      }),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   };
 
   return (
@@ -63,6 +107,7 @@ const CompleteComponent = ({navigation, route}) => {
         end={{x: 1.0, y: 1.0}}>
         <TouchableOpacity
           onPress={() => {
+            AddComplete();
             navigation.popToTop();
           }}
           style={styles.bodyGoBackButton}>
@@ -102,7 +147,7 @@ const styles = StyleSheet.create({
   },
   // Go back
   bodyGoBackContainer: {
-    marginTop: screen.height / 5,
+    marginTop: screen.height / 7,
     marginHorizontal: screen.width / 20,
     height: screen.height / 15,
     borderRadius: 8,

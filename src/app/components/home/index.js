@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import {
+  faCar,
   faDirections,
   faMapMarkerAlt,
   faMotorcycle,
@@ -7,7 +8,7 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image} from 'react-native';
 import screen from '../../asset/constants/Measure';
 import AdvertisementComponent from './Advertisement';
@@ -15,11 +16,36 @@ import HeaderComponent from './Header';
 import StatusWork from './StatusWork';
 import Modal from 'react-native-modal';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
-import ava from '../../asset/image/mechanic.jpg';
+
+const apiCustomerRequest =
+  'https://history-search-map.herokuapp.com/api/customerRequest/1';
 
 const HomeComponent = ({navigation, route}) => {
   const [isActive, setIsActive] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [id, setID] = useState(route.params.id);
+  const [data, setData] = useState({
+    fullName: '',
+    avatar:
+      'https://static2.yan.vn/YanNews/2167221/202003/dan-mang-du-trend-thiet-ke-avatar-du-kieu-day-mau-sac-tu-anh-mac-dinh-f4781c7a.jpg',
+    phone: '',
+    address: '',
+    distance: '',
+    cate: '',
+    vehicleName: '',
+    userID: '',
+    detailsFix: '',
+    description: '',
+    image: '',
+  });
+  useEffect(() => {
+    fetch(apiCustomerRequest)
+      .then(res => res.json())
+      .then(json => {
+        setData(json);
+      });
+  }, []);
+
   function ModalTester() {
     return (
       <View>
@@ -31,7 +57,10 @@ const HomeComponent = ({navigation, route}) => {
           <View style={styles.modalContainer}>
             <View style={styles.modalHeaderContainer}>
               <View>
-                <Image source={ava} style={styles.modalHeaderImage} />
+                <Image
+                  source={{uri: data.avatar}}
+                  style={styles.modalHeaderImage}
+                />
               </View>
               <View style={styles.modalHeaderDetailsContainer}>
                 <View style={styles.modalHeaderTitle}>
@@ -41,7 +70,7 @@ const HomeComponent = ({navigation, route}) => {
                     color="orange"
                     style={styles.modalHeaderIconUser}
                   />
-                  <Text>Trần Đại Đăng</Text>
+                  <Text>{data.fullName}</Text>
                 </View>
                 <View style={styles.modalHeaderTitle}>
                   <FontAwesomeIcon
@@ -50,7 +79,7 @@ const HomeComponent = ({navigation, route}) => {
                     color="orange"
                     style={styles.modalHeaderIconLocate}
                   />
-                  <Text>231 Lê Văn Việt Quận 9, Thành phố Hồ Chí Minh</Text>
+                  <Text>{data.address}</Text>
                 </View>
                 <View style={styles.modalHeaderTitle}>
                   <FontAwesomeIcon
@@ -59,17 +88,17 @@ const HomeComponent = ({navigation, route}) => {
                     color="orange"
                     style={styles.modalHeaderIconLocate}
                   />
-                  <Text style={styles.modalTitleText}>5km</Text>
+                  <Text style={styles.modalTitleText}>{data.distance}</Text>
                 </View>
                 {/* Xe sửa chữa */}
                 <View style={styles.headerVehicleContainer}>
                   <FontAwesomeIcon
                     style={styles.headerIconVehicle}
-                    icon={faMotorcycle}
+                    icon={data.cate === 'Xe máy' ? faMotorcycle : faCar}
                     color="orange"
                     size={27}
                   />
-                  <Text>Xe Honda tay ga SH 2021</Text>
+                  <Text>{data.vehicleName}</Text>
                 </View>
               </View>
               <Pressable
@@ -84,7 +113,20 @@ const HomeComponent = ({navigation, route}) => {
               <Pressable
                 onPress={() => {
                   setModalVisible(false);
-                  navigation.navigate('AcceptComponent');
+                  navigation.navigate('AcceptComponent', {
+                    fullName: data.fullName,
+                    avatar: data.avatar,
+                    phone: data.phone,
+                    address: data.address,
+                    distance: data.distance,
+                    cate: data.cate,
+                    vehicleName: data.vehicleName,
+                    userID: data.userID,
+                    mecID: id,
+                    detailsFix: data.detailsFix,
+                    description: data.description,
+                    image: data.image,
+                  });
                 }}
                 style={styles.modalFooterButtonAccept}>
                 <Text style={styles.modalFooterButtonText}>Xem chi tiết</Text>
@@ -101,14 +143,6 @@ const HomeComponent = ({navigation, route}) => {
       <ScrollView>
         <HeaderComponent />
         <AdvertisementComponent />
-        {/* <Services
-          isActive={isActive}
-          isFixCar={isFixCar}
-          isFixMotor={isFixMotor}
-          setIsActive={setIsActive}
-          setIsFixCar={setIsFixCar}
-          setIsFixMotor={setIsFixMotor}
-        /> */}
         <StatusWork
           setModalVisible={setModalVisible}
           isActive={isActive}
@@ -128,7 +162,7 @@ const styles = StyleSheet.create({
   },
   // modal
   modalContainer: {
-    minHeight: screen.height / 3.5,
+    minHeight: screen.height / 2.6,
     borderWidth: 1,
     borderRadius: 10,
     backgroundColor: '#fff',

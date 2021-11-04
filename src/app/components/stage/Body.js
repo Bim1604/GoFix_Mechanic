@@ -20,17 +20,11 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSpinner, faUser, faWrench} from '@fortawesome/free-solid-svg-icons';
 
-const data = [
-  {
-    content: 'Bể bánh xe',
-  },
-];
-
-const BodyComponent = ({navigation, total}) => {
+const BodyComponent = ({navigation, total, route}) => {
   let renderItem = ({item, index}) => {
     return (
       <View>
-        <DetailsFixer content={item.content} total={item.total} />
+        <DetailsFixer content={item.text} />
       </View>
     );
   };
@@ -56,15 +50,13 @@ const BodyComponent = ({navigation, total}) => {
       </View>
       <View style={styles.bodyUserContainer}>
         <View style={styles.bodyImageContainer}>
-          <Image source={avatar} style={styles.bodyImage} />
+          <Image source={{uri: route.params.avatar}} style={styles.bodyImage} />
         </View>
         <View style={styles.bodyTextContainer}>
           <View style={styles.bodyTitleContainer}>
-            <Text style={styles.bodyTextName}>Trần Đại Đăng</Text>
-            <Text style={styles.bodyText}>0971547522</Text>
-            <Text style={styles.bodyText}>
-              123 Lê Văn Việt, quận 9, thành phố Hồ Chí Minh
-            </Text>
+            <Text style={styles.bodyTextName}>{route.params.fullName}</Text>
+            <Text style={styles.bodyText}>{route.params.phone}</Text>
+            <Text style={styles.bodyText}>{route.params.address}</Text>
           </View>
         </View>
       </View>
@@ -81,7 +73,7 @@ const BodyComponent = ({navigation, total}) => {
         </View>
         <View style={styles.bodyDetailsFixContainer}>
           <View>
-            <FlatList data={data} renderItem={renderItem} />
+            <FlatList data={route.params.detailsFix} renderItem={renderItem} />
           </View>
           <View>
             <View style={styles.bodyTextContainerShow}>
@@ -117,6 +109,19 @@ const BodyComponent = ({navigation, total}) => {
           onPress={() => {
             navigation.navigate('StageCompleteComponent', {
               total: total,
+              fullName: route.params.fullName,
+              avatar: route.params.avatar,
+              phone: route.params.phone,
+              address: route.params.address,
+              distance: route.params.distance,
+              cate: route.params.cate,
+              vehicleName: route.params.vehicleName,
+              userID: route.params.userID,
+              mecID: route.params.mecID,
+              detailsFix: route.params.detailsFix,
+              description: route.params.description,
+              image: route.params.image,
+              status: true,
             });
           }}
           style={styles.bodyCompleteButton}>
@@ -124,10 +129,25 @@ const BodyComponent = ({navigation, total}) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('CancelComponent');
+            navigation.navigate('CancelComponent', {
+              total: total,
+              fullName: route.params.fullName,
+              avatar: route.params.avatar,
+              phone: route.params.phone,
+              address: route.params.address,
+              distance: route.params.distance,
+              cate: route.params.cate,
+              vehicleName: route.params.vehicleName,
+              userID: route.params.userID,
+              mecID: route.params.mecID,
+              detailsFix: route.params.detailsFix,
+              description: route.params.description,
+              image: route.params.image,
+              status: false,
+            });
           }}
           style={styles.bodyDenyButton}>
-          <Text style={styles.bodyCompleteText}>Hủy dịch vụ</Text>
+          <Text style={styles.bodyCompleteText}>Hủy đơn</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -194,8 +214,8 @@ const styles = StyleSheet.create({
   bodyTitleContainer: {
     marginLeft: 15,
     flexDirection: 'column',
-    width: '90%',
-    height: 60,
+    width: '80%',
+    height: screen.height / 9,
   },
   bodyText: {
     fontSize: 14,
@@ -214,7 +234,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   bodyItemContainer: {
-    height: '46%',
+    height: screen.height / 2,
   },
   bodyItemTitleContainer: {
     flexDirection: 'row',
@@ -230,16 +250,17 @@ const styles = StyleSheet.create({
   },
   bodyFixTextContainer: {
     flexDirection: 'row',
-    marginLeft: 15,
-    width: 380,
+    width: screen.width,
     justifyContent: 'space-between',
     marginBottom: 10,
   },
   bodyFixTextTitle: {
     fontSize: 15,
+    marginLeft: 15,
   },
   bodyFixTextCost: {
     fontSize: 15,
+    marginRight: 15,
   },
   //  Total
   bodyTextContainerShow: {
@@ -267,7 +288,6 @@ const styles = StyleSheet.create({
   bodyCompleteContainer: {
     flexDirection: 'column',
     alignSelf: 'center',
-    marginTop: screen.height / 10,
   },
   bodyCompleteButton: {
     width: screen.width / 1.1,

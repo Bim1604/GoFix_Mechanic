@@ -42,7 +42,13 @@ const HomeScreen = ({navigation, route}) => {
   }, [navigation, route]);
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="HomeComponent" component={HomeComponent} />
+      <Stack.Screen
+        initialParams={{
+          id: route.params.id,
+        }}
+        name="HomeComponent"
+        component={HomeComponent}
+      />
       <Stack.Screen name="AcceptComponent" component={AcceptComponent} />
       <Stack.Screen name="DenyComponent" component={DenyComponent} />
       <Stack.Screen name="MapComponent" component={MapComponent} />
@@ -63,13 +69,17 @@ const ProfileScreen = ({route}) => {
         initialParams={{
           fullName: route.params.fullName,
           phone: route.params.phone,
+          id: route.params.id,
           setFullName: route.params.setFullName,
         }}
         name="ProfileComponent"
         component={ProfileComponent}
       />
       <Stack.Screen name="SettingComponent" component={SettingComponent} />
-      <Stack.Screen name="DetailsInfoComponent" component={InfoDetailsComponent} />
+      <Stack.Screen
+        name="DetailsInfoComponent"
+        component={InfoDetailsComponent}
+      />
     </Stack.Navigator>
   );
 };

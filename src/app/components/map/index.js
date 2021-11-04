@@ -25,7 +25,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import call from 'react-native-phone-call';
 
-const phone = '0971547522';
 const apiKey = 'dJFdCdCFCXpUHfhlyWyv3h8uAmLaTRn15TEAVoF2';
 const accessToken =
   'pk.eyJ1IjoiYmltMTYwNCIsImEiOiJja3U3N2Rnbm40MDE3MnJxdGFpNW56bDJ3In0.MsFZyi3660Z_FdDm7ptx7A';
@@ -38,21 +37,21 @@ const MapComponent = ({navigation, route}) => {
   const latMechanic = latUser + 0.0045;
   const lngMechanic = lngUser + 0.0045;
   useEffect(() => {
-    GetLocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 15000,
-    }).then(location => {
-      setLatUser(location.latitude);
-      setLngUser(location.longitude);
-      fetch(
-        `https://rsapi.goong.io/Geocode?latlng=${location.latitude},${location.longitude}&api_key=${apiKey}`,
-      )
-        .then(res => res.json())
-        .then(local => {
-          setAddress(local.results[0].formatted_address);
-        });
-    });
-  }, []);
+    // GetLocation.getCurrentPosition({
+    //   enableHighAccuracy: true,
+    //   timeout: 15000,
+    // }).then(location => {
+    // setLatUser(location.latitude);
+    // setLngUser(location.longitude);
+    fetch(
+      `https://rsapi.goong.io/Geocode?latlng=${latUser},${lngUser}&api_key=${apiKey}`,
+    )
+      .then(res => res.json())
+      .then(local => {
+        setAddress(local.results[0].formatted_address);
+      });
+    // });
+  }, [latUser, lngUser]);
   useEffect(() => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -95,6 +94,7 @@ const MapComponent = ({navigation, route}) => {
           latMechanic={latMechanic}
           lngMechanic={lngMechanic}
           total={route.params.total}
+          route={route}
         />
       ) : (
         <View style={styles.cancelContainer}>
@@ -114,12 +114,6 @@ const MapComponent = ({navigation, route}) => {
   );
 };
 
-const data = [
-  {
-    content: 'Bể bánh xe',
-  },
-];
-
 const DetailsFixer = ({content, total}) => {
   return (
     <View style={styles.bottomBodyFixTextContainer}>
@@ -138,12 +132,13 @@ const DirectComponent = ({
   latMechanic,
   lngMechanic,
   total,
+  route,
 }) => {
   const [latAverage, setLatAverage] = useState(1);
   const [lngAverage, setLngAverage] = useState(1);
   const [isShowInfo, setIsShowInfo] = useState(false);
   const args = {
-    number: phone,
+    number: route.params.phone,
   };
   const LONGITUDE_DELTA =
     lngUser < lngMechanic
@@ -167,15 +162,13 @@ const DirectComponent = ({
     }
   }, [latMechanic, latUser, lngMechanic, lngUser]);
   let renderItem = ({item, index}) => {
-    if (item.isChoose === false) {
-      return;
-    }
     return (
       <View>
-        <DetailsFixer content={item.content} total={total} />
+        <DetailsFixer content={item.text} total={total} />
       </View>
     );
   };
+
   return (
     <View style={styles.mapContainer}>
       <MapView
@@ -238,14 +231,19 @@ const DirectComponent = ({
           </View>
           <View style={styles.bottomBodyUserContainer}>
             <View style={styles.bottomBodyImageContainer}>
-              <Image source={avatar} style={styles.bottomBodyImage} />
+              <Image
+                source={{uri: route.params.avatar}}
+                style={styles.bottomBodyImage}
+              />
             </View>
             <View style={styles.bottomBodyTextContainer}>
               <View style={styles.bottomBodyTitleContainer}>
-                <Text style={styles.bottomBodyTextName}>Trần Đại Đăng</Text>
-                <Text style={styles.bottomBodyText}>{phone}</Text>
+                <Text style={styles.bottomBodyTextName}>
+                  {route.params.fullName}
+                </Text>
+                <Text style={styles.bottomBodyText}>{route.params.phone}</Text>
                 <Text style={styles.bottomBodyText}>
-                  123 Lê Văn Việt, quận 9, thành phố Hồ Chí Minh
+                  {route.params.address}
                 </Text>
               </View>
             </View>
@@ -273,7 +271,10 @@ const DirectComponent = ({
                   <Text style={styles.bottomBodyTitle}>Chi tiết sửa chữa</Text>
                 </View>
                 <View>
-                  <FlatList data={data} renderItem={renderItem} />
+                  <FlatList
+                    data={route.params.detailsFix}
+                    renderItem={renderItem}
+                  />
                 </View>
               </View>
             </View>
@@ -306,7 +307,21 @@ const DirectComponent = ({
             <TouchableOpacity
               style={styles.bottomFooterButtonCancel}
               onPress={() => {
-                navigation.navigate('DenyComponent');
+                navigation.navigate('DenyComponent', {
+                  fullName: route.params.fullName,
+                  avatar: route.params.avatar,
+                  phone: route.params.phone,
+                  address: route.params.address,
+                  cate: route.params.cate,
+                  vehicleName: route.params.vehicleName,
+                  userID: route.params.userID,
+                  mecID: route.params.mecID,
+                  detailsFix: route.params.detailsFix,
+                  description: route.params.description,
+                  image: route.params.image,
+                  status: false,
+                  total: total,
+                });
               }}>
               <Text style={styles.bottomFooterButtonText}>Hủy đơn</Text>
             </TouchableOpacity>
@@ -315,6 +330,18 @@ const DirectComponent = ({
               onPress={() => {
                 navigation.navigate('StageComponent', {
                   total: total,
+                  fullName: route.params.fullName,
+                  avatar: route.params.avatar,
+                  phone: route.params.phone,
+                  address: route.params.address,
+                  distance: route.params.distance,
+                  cate: route.params.cate,
+                  vehicleName: route.params.vehicleName,
+                  userID: route.params.userID,
+                  mecID: route.params.mecID,
+                  detailsFix: route.params.detailsFix,
+                  description: route.params.description,
+                  image: route.params.image,
                 });
               }}>
               <Text style={styles.bottomFooterButtonText}>Đã đến nơi</Text>
@@ -348,7 +375,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   mapDetailsShow: {
-    height: '60%',
+    height: '52%',
     width: '100%',
   },
   // bottom
@@ -380,7 +407,7 @@ const styles = StyleSheet.create({
   },
   bottomBodyContainerShow: {
     flexDirection: 'column',
-    height: '68%',
+    height: screen.height / 2,
   },
   //  Bottom Body User
   bottomBodyUserContainer: {
@@ -411,8 +438,9 @@ const styles = StyleSheet.create({
   bottomBodyTitleContainer: {
     marginLeft: 15,
     flexDirection: 'column',
-    width: '90%',
+    width: '85%',
     height: 60,
+    marginBottom: 10,
   },
   bottomBodyText: {
     fontSize: 14,
@@ -461,15 +489,16 @@ const styles = StyleSheet.create({
   },
   bottomBodyFixTextContainer: {
     flexDirection: 'row',
-    marginLeft: 15,
-    width: 380,
+    width: screen.width,
     justifyContent: 'space-between',
   },
   bottomBodyFixTextTitle: {
     fontSize: 15,
+    marginLeft: 15,
   },
   bottomBodyFixTextCost: {
     fontSize: 15,
+    marginRight: 15,
   },
   //  Footer
   //  bottom Footer
@@ -481,7 +510,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: 395,
+    width: screen.width,
     marginBottom: 10,
   },
   bottomBodyTotalTitle: {
@@ -491,6 +520,7 @@ const styles = StyleSheet.create({
   },
   bottomBodyTotalText: {
     fontSize: 15,
+    marginRight: 15,
   },
   // Bottom footer call
   bottomFooterButtonContainer: {
