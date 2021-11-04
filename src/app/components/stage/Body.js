@@ -121,6 +121,7 @@ const BodyComponent = ({navigation, total, route}) => {
               detailsFix: route.params.detailsFix,
               description: route.params.description,
               image: route.params.image,
+              status: true,
             });
           }}
           style={styles.bodyCompleteButton}>
@@ -129,6 +130,7 @@ const BodyComponent = ({navigation, total, route}) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('CancelComponent', {
+              total: total,
               fullName: route.params.fullName,
               avatar: route.params.avatar,
               phone: route.params.phone,
@@ -141,10 +143,11 @@ const BodyComponent = ({navigation, total, route}) => {
               detailsFix: route.params.detailsFix,
               description: route.params.description,
               image: route.params.image,
+              status: false,
             });
           }}
           style={styles.bodyDenyButton}>
-          <Text style={styles.bodyCompleteText}>Hủy dịch vụ</Text>
+          <Text style={styles.bodyCompleteText}>Hủy đơn</Text>
         </TouchableOpacity>
       </View>
     </View>
