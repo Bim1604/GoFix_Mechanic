@@ -4,12 +4,12 @@ import {View} from 'react-native';
 import BodyComponent from './Body';
 import HeaderComponent from './Header';
 
-const HistoryComponent = ({navigation}) => {
+const HistoryComponent = ({navigation, route}) => {
   return (
     <View>
       {/* Header */}
       <HeaderComponent navigation={navigation} content="Lịch sử hoạt động" />
-      <BodyComponent navigation={navigation} />
+      <BodyComponent navigation={navigation} id={route.params.id} />
     </View>
   );
 };

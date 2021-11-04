@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   FlatList,
@@ -8,10 +8,6 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import ava_cus1 from '../../asset/image/mechanic.jpg';
-import ava_cus2 from '../../asset/image/cus2.jpg';
-import ava_cus3 from '../../asset/image/cus3.jpg';
-import ava_cus4 from '../../asset/image/cus4.jpg';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faCalendarAlt,
@@ -23,6 +19,9 @@ import {
   faWrench,
 } from '@fortawesome/free-solid-svg-icons';
 import screen from '../../asset/constants/Measure';
+
+const apiHistoryCus =
+  'https://history-search-map.herokuapp.com/api/historyCustomer';
 
 export const ItemListDetails = ({text, icon}) => {
   return (
@@ -71,7 +70,7 @@ const HistoryItem = ({
     },
     {
       icon: faWrench,
-      content: detailsFix[0].fix,
+      content: detailsFix[0].text,
     },
     {
       icon: faDollarSign,
@@ -101,7 +100,7 @@ const HistoryItem = ({
         style={styles.itemContainer}>
         {/* Ava */}
         <View style={styles.itemImageContainer}>
-          <Image source={avatar} style={styles.itemImageItem} />
+          <Image source={{uri: avatar}} style={styles.itemImageItem} />
           <Text
             style={status ? styles.itemCompleteText : styles.itemCancelText}>
             {status ? completeStatusText : cancelStatusText}
@@ -125,66 +124,26 @@ const HistoryItem = ({
     </View>
   );
 };
+const BodyComponent = ({navigation, id}) => {
+  const [data, setData] = useState();
+  const getHistoryCus = async () => {
+    await fetch(apiHistoryCus)
+      .then(res => res.json())
+      .then(json => {
+        let historyItem = [];
+        for (let index = 0; index < json.length; index++) {
+          if (id === json[index].mecID) {
+            historyItem.push(json[index]);
+          }
+        }
+        setData(historyItem);
+      });
+  };
 
-const data = [
-  {
-    name: 'Hoàng Quốc Khánh',
-    avatar: ava_cus1,
-    phone: '0364909656',
-    address: '132 Lê Văn Việt, Quận 9, Thành phố Hồ Chí Minh',
-    detailsFix: [
-      {
-        fix: 'Bể bánh xe',
-        unitPrice: 80000,
-      },
-    ],
-    time: '15:16:58 30-10-2021',
-    price: 80000,
-    status: true,
-    motor: 'Xe honda tay ga SH 2021',
-    car: '',
-    description: 'Bể bánh xe sau',
-    image: [
-      {
-        link:
-          'https://cdn.xehoiviet.com/images/car/cropthumb/1200x752/2020/08/13/0939636611/cam-do-thanh-ly-sh-da-ga-qua-khong-noi-2l4ggdkk7h4.jpg',
-      },
-      {
-        link:
-          'https://muaxegiatot.vn/wp-content/uploads/2019/11/can-truoc-honda-sh-2020-muaxegiatot-vn.jpg',
-      },
-      {
-        link:
-          'https://giaxe.2banh.vn/cache/dataupload/products/slides/520_368_66f9e0b774b551ea584e560c347f61a6.jpg',
-      },
-    ],
-  },
-  {
-    name: 'Trần Đại Đăng',
-    avatar: ava_cus2,
-    phone: '0364909656',
-    address: '25 Nguyễn Xuyển, Quận 9, Thành phố Hồ Chí Minh',
-    detailsFix: [
-      {
-        fix: 'Bể bánh xe',
-        unitPrice: 80000,
-      },
-    ],
-    time: '05:06:58 30-10-2021',
-    price: 80000,
-    status: false,
-    motor: 'Xe honda genio 2021',
-    car: '',
-    description: 'Bể bánh xe sau',
-    image: [
-      {
-        link:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2RZTDSXMCdVIunIZFZVVLqy65Pip7MnAxIQ&usqp=CAU',
-      },
-    ],
-  },
-];
-const BodyComponent = ({navigation}) => {
+  useEffect(() => {
+    getHistoryCus();
+  });
+
   const renderItem = ({item, index}) => {
     return (
       <View>
@@ -208,7 +167,7 @@ const BodyComponent = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.listItemContainer}>
         <FlatList data={data} renderItem={renderItem} horizontal={false} />
       </View>
     </View>
@@ -219,6 +178,10 @@ const styles = StyleSheet.create({
   container: {
     width: screen.width,
     height: screen.height,
+  },
+  // list
+  listItemContainer: {
+    height: screen.height - screen.height / 5,
   },
   // Item container
   itemContainer: {

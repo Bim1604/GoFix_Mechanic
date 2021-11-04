@@ -73,7 +73,7 @@ const ItemFixer = ({title, price}) => {
         </View>
         <View style={styles.itemTextInputContainer}>
           <Text style={styles.itemTextInput}>{price}</Text>
-          <Text style={styles.itemCurrencyText}> Đ</Text>
+          <Text style={styles.itemCurrencyText}> </Text>
         </View>
       </View>
     </View>
@@ -112,7 +112,7 @@ const BodyDetails = ({
               activeDotStyle={styles.headerActiveDot}
               dotStyle={styles.headerDot}>
               {image.map((url, index) => (
-                <ImageBody key={index} image={url.link} />
+                <ImageBody key={index} image={url.text} />
               ))}
             </Swiper>
           </View>
@@ -158,7 +158,7 @@ const BodyDetails = ({
         </View>
         <View style={styles.headerUserContainer}>
           <View style={styles.itemImageContainer}>
-            <Image source={avatar} style={styles.itemImageItem} />
+            <Image source={{uri: avatar}} style={styles.itemImageItem} />
             <Text
               style={status ? styles.itemCompleteText : styles.itemCancelText}>
               {status ? completeStatusText : cancelStatusText}
@@ -187,7 +187,7 @@ const BodyDetails = ({
           <Text style={styles.bodyItemTitle}>Chi tiết sửa chữa</Text>
         </View>
         {detailsFix.map((item, index) => (
-          <ItemFixer title={item.fix} price={item.unitPrice} key={index} />
+          <ItemFixer title={item.text} price={item.unitPrice} key={index} />
         ))}
         <View
           style={{
@@ -198,8 +198,12 @@ const BodyDetails = ({
             marginLeft: 8,
             marginRight: 10,
           }}>
-          {description === '' ? <View /> : <Text>Mô tả chi tiết:</Text>}
-          {description === '' ? <View /> : <Text>{description}</Text>}
+          <Text>Mô tả chi tiết:</Text>
+          {description === '' || description === undefined ? (
+            <Text>Không có mô tả</Text>
+          ) : (
+            <Text>{description}</Text>
+          )}
         </View>
       </View>
       {/* Hình ảnh sửa chữa */}
@@ -221,7 +225,7 @@ const BodyDetails = ({
                 indexCurrent={index}
                 setModalVisible={setModalVisible}
                 key={index}
-                image={item.link}
+                image={item.text}
               />
             ))}
           </ScrollView>
