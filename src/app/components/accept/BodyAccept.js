@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -20,30 +20,11 @@ import {
   faMotorcycle,
   faUser,
   faWrench,
+  faCar,
 } from '@fortawesome/free-solid-svg-icons';
 import screen from '../../asset/constants/Measure';
 import Modal from 'react-native-modal';
 import Swiper from 'react-native-swiper';
-const data = [
-  {
-    title: 'Bể bánh xe',
-    price: 0,
-  },
-];
-const dataImage = [
-  {
-    link:
-      'https://cdn.xehoiviet.com/images/car/cropthumb/1200x752/2020/08/13/0939636611/cam-do-thanh-ly-sh-da-ga-qua-khong-noi-2l4ggdkk7h4.jpg',
-  },
-  {
-    link:
-      'https://muaxegiatot.vn/wp-content/uploads/2019/11/can-truoc-honda-sh-2020-muaxegiatot-vn.jpg',
-  },
-  {
-    link:
-      'https://giaxe.2banh.vn/cache/dataupload/products/slides/520_368_66f9e0b774b551ea584e560c347f61a6.jpg',
-  },
-];
 
 const ImageBody = ({image}) => {
   return (
@@ -104,9 +85,10 @@ const ItemFixer = ({title, total, setTotal}) => {
   );
 };
 
-const BodyAccept = ({navigation, total, setTotal}) => {
+const BodyAccept = ({navigation, total, setTotal, route}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [indexModalSwiper, setIndexModalSwiper] = useState(0);
+
   function ModalTester() {
     return (
       <View>
@@ -122,8 +104,8 @@ const BodyAccept = ({navigation, total, setTotal}) => {
               autoplay={false}
               activeDotStyle={styles.headerActiveDot}
               dotStyle={styles.headerDot}>
-              {dataImage.map((url, index) => (
-                <ImageBody key={index} image={url.link} />
+              {route.params.image.map((url, index) => (
+                <ImageBody key={index} image={url.text} />
               ))}
             </Swiper>
           </View>
@@ -131,6 +113,7 @@ const BodyAccept = ({navigation, total, setTotal}) => {
       </View>
     );
   }
+
   return (
     <View>
       <ModalTester />
@@ -147,7 +130,10 @@ const BodyAccept = ({navigation, total, setTotal}) => {
         </View>
         <View style={styles.headerUserContainer}>
           <View>
-            <Image source={ava} style={styles.headerUserImage} />
+            <Image
+              source={{uri: route.params.avatar}}
+              style={styles.headerUserImage}
+            />
           </View>
           <View style={styles.headerDetailsContainer}>
             {/* Tên khách hàng */}
@@ -158,7 +144,7 @@ const BodyAccept = ({navigation, total, setTotal}) => {
                 color="orange"
                 style={styles.headerIconUser}
               />
-              <Text>Trần Đại Đăng</Text>
+              <Text>{route.params.fullName}</Text>
             </View>
             {/* Địa chỉ */}
             <View style={styles.headerTitle}>
@@ -168,7 +154,7 @@ const BodyAccept = ({navigation, total, setTotal}) => {
                 color="orange"
                 style={styles.headerIconLocate}
               />
-              <Text>123 Lê Văn Việt Quận 9, Thành phố Hồ Chí Minh</Text>
+              <Text>{route.params.address}</Text>
             </View>
             <View style={styles.headerTitle}>
               <FontAwesomeIcon
@@ -177,17 +163,17 @@ const BodyAccept = ({navigation, total, setTotal}) => {
                 color="orange"
                 style={styles.headerIconDirect}
               />
-              <Text style={styles.titleText}>5km</Text>
+              <Text style={styles.titleText}>{route.params.distance}</Text>
             </View>
             {/* Xe sửa chữa */}
             <View style={styles.headerVehicleContainer}>
               <FontAwesomeIcon
                 style={styles.headerIconVehicle}
-                icon={faMotorcycle}
+                icon={route.params.cate === 'Xe máy' ? faMotorcycle : faCar}
                 color="orange"
                 size={27}
               />
-              <Text>Xe Honda tay ga SH 2021</Text>
+              <Text>{route.params.vehicleName}</Text>
             </View>
           </View>
         </View>
@@ -203,12 +189,12 @@ const BodyAccept = ({navigation, total, setTotal}) => {
           />
           <Text style={styles.bodyItemTitle}>Chi tiết sửa chữa</Text>
         </View>
-        {data.map((item, index) => (
+        {route.params.detailsFix.map((item, index) => (
           <ItemFixer
             setTotal={setTotal}
             total={total}
             key={index}
-            title={item.title}
+            title={item.text}
           />
         ))}
         <View
@@ -221,7 +207,7 @@ const BodyAccept = ({navigation, total, setTotal}) => {
             marginRight: 10,
           }}>
           <Text>Mô tả chi tiết:</Text>
-          <Text>Bể bánh xe sau</Text>
+          <Text>{route.params.description}</Text>
         </View>
       </View>
       {/* Hình ảnh sửa chữa */}
@@ -237,13 +223,13 @@ const BodyAccept = ({navigation, total, setTotal}) => {
         </View>
         <View style={styles.headerImageFixer}>
           <ScrollView horizontal={true}>
-            {dataImage.map((item, index) => (
+            {route.params.image.map((item, index) => (
               <ImageFixer
                 setIndexModalSwiper={setIndexModalSwiper}
                 indexCurrent={index}
                 setModalVisible={setModalVisible}
                 key={index}
-                image={item.link}
+                image={item.text}
               />
             ))}
           </ScrollView>
@@ -283,6 +269,18 @@ const BodyAccept = ({navigation, total, setTotal}) => {
             } else {
               navigation.navigate('MapComponent', {
                 total: total,
+                fullName: route.params.fullName,
+                avatar: route.params.avatar,
+                phone: route.params.phone,
+                address: route.params.address,
+                distance: route.params.distance,
+                cate: route.params.cate,
+                vehicleName: route.params.vehicleName,
+                userID: route.params.userID,
+                mecID: route.params.mecID,
+                detailsFix: route.params.detailsFix,
+                description: route.params.description,
+                image: route.params.image,
               });
             }
           }}

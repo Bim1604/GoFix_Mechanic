@@ -13,6 +13,7 @@ const StartFixComponent = ({navigation, route}) => {
       <BodyComponent
         navigation={navigation}
         total={route.params.total === undefined ? 0 : route.params.total}
+        route={route}
       />
     </View>
   );

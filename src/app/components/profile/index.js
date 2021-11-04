@@ -10,6 +10,7 @@ const apiUser = 'https://history-search-map.herokuapp.com/api/user';
 
 const ProfileComponent = ({navigation, route}) => {
   const [phone, setPhone] = useState(route.params.phone);
+  const [id, setID] = useState(route.params.id);
   const [data, setData] = useState({
     fullName: '',
     avatar:
@@ -24,15 +25,12 @@ const ProfileComponent = ({navigation, route}) => {
       .then(res => res.json())
       .then(json => {
         for (let index = 0; index < json.length; index++) {
-          if (
-            phone === json[index].phone &&
-            json[index].role === 'mec'
-          ) {
+          if (id === json[index].id && json[index].role === 'mec') {
             setData(json[index]);
           }
         }
       });
-  }, [phone]);
+  }, [id]);
   return (
     <View>
       {/* Header */}
@@ -52,6 +50,7 @@ const ProfileComponent = ({navigation, route}) => {
           onPress={() => {
             navigation.navigate('DetailsInfoComponent', {
               phone: phone,
+              id: id,
             });
           }}
           style={styles.bodyUserNavContainer}>
