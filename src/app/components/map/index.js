@@ -24,6 +24,7 @@ import {
   faWrench,
 } from '@fortawesome/free-solid-svg-icons';
 import call from 'react-native-phone-call';
+import Geolocation from 'react-native-geolocation-service';
 
 const apiKey = 'dJFdCdCFCXpUHfhlyWyv3h8uAmLaTRn15TEAVoF2';
 const accessToken =
@@ -37,20 +38,23 @@ const MapComponent = ({navigation, route}) => {
   const latMechanic = latUser + 0.0045;
   const lngMechanic = lngUser + 0.0045;
   useEffect(() => {
-    // GetLocation.getCurrentPosition({
-    //   enableHighAccuracy: true,
-    //   timeout: 15000,
-    // }).then(location => {
-    // setLatUser(location.latitude);
-    // setLngUser(location.longitude);
-    fetch(
-      `https://rsapi.goong.io/Geocode?latlng=${latUser},${lngUser}&api_key=${apiKey}`,
-    )
-      .then(res => res.json())
-      .then(local => {
-        setAddress(local.results[0].formatted_address);
-      });
-    // });
+    Geolocation.getCurrentPosition(
+      position => {
+        setLatUser(position.coords.latitude);
+        setLngUser(position.coords.longitude);
+        fetch(
+          `https://rsapi.goong.io/Geocode?latlng=${latUser},${lngUser}&api_key=${apiKey}`,
+        )
+          .then(res => res.json())
+          .then(local => {
+            setAddress(local.results[0].formatted_address);
+          });
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
   }, [latUser, lngUser]);
   useEffect(() => {
     return new Promise((resolve, reject) => {
