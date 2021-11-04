@@ -167,7 +167,7 @@ const BodyComponent = ({navigation, id}) => {
   };
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.listItemContainer}>
         <FlatList data={data} renderItem={renderItem} horizontal={false} />
       </View>
     </View>
@@ -178,6 +178,10 @@ const styles = StyleSheet.create({
   container: {
     width: screen.width,
     height: screen.height,
+  },
+  // list
+  listItemContainer: {
+    height: screen.height - screen.height / 5,
   },
   // Item container
   itemContainer: {
