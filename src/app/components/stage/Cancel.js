@@ -62,6 +62,10 @@ const CancelComponent = ({navigation, route}) => {
     setTime(timeCurrent + ' ' + date);
   }, []);
 
+  const sendReqToCus = async () => {
+    await fetch('http://192.168.1.12:4000/done');
+  };
+
   const AddReason = () => {
     fetch(apiHistory, {
       method: 'POST',
@@ -166,6 +170,7 @@ const CancelComponent = ({navigation, route}) => {
         <TouchableOpacity
           onPress={() => {
             AddReason();
+            sendReqToCus();
             navigation.popToTop();
           }}
           style={styles.footerButtonSend}>

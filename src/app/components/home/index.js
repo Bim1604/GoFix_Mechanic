@@ -52,6 +52,7 @@ const HomeComponent = ({navigation, route}) => {
     }
   });
 
+
   function ModalTester() {
     return (
       <View>

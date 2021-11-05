@@ -85,6 +85,10 @@ const ItemFixer = ({title, total, setTotal}) => {
   );
 };
 
+const sendReqToCus = async () => {
+  await fetch('http://192.168.1.12:4000');
+};
+
 const BodyAccept = ({navigation, total, setTotal, route}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [indexModalSwiper, setIndexModalSwiper] = useState(0);
@@ -267,6 +271,7 @@ const BodyAccept = ({navigation, total, setTotal, route}) => {
             if (total === undefined || total === '') {
               alert('Nhập chi phí sửa chữa');
             } else {
+              sendReqToCus();
               navigation.navigate('MapComponent', {
                 total: total,
                 fullName: route.params.fullName,

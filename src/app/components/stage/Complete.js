@@ -38,7 +38,12 @@ const CompleteComponent = ({navigation, route}) => {
     var date = getCurrentDate();
     var timeCurrent = getCurrentTime();
     setTime(timeCurrent + ' ' + date);
+    sendReqToCus();
   }, []);
+
+  const sendReqToCus = async () => {
+    await fetch('http://192.168.1.12:4000/done');
+  };
 
   const AddComplete = () => {
     fetch(apiHistory, {
